@@ -1,0 +1,4 @@
+#Tue Sep 22 09:56:02 EET 2020
+base.0=/home/bmericc/Dropbox/AppProjects/WebViewStudio/app/build/intermediates/dex/debug/mergeDexDebug/classes.dex
+path.0=classes.dex
+renamed.0=classes.dex

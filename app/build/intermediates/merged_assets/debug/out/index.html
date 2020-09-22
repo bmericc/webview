@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css">
+<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+<script src="http://ec2cron.uygulamam.com:8081/target/target-script-min.js#anonymous"></script>
+<script type="text/javascript"> 
+
+   /* load external js files */
+  function loadScript( url, callback) {
+    if($('script[src="' + url + '"]').length == 0) {
+      var head = document.getElementsByTagName('head')[0];
+      var script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = url;
+      script.onreadystatechange = callback;
+      script.onload = callback;
+      head.appendChild(script);
+    }
+    else {
+      callback();
+    }
+  }
+
+  /* load external css files */
+  function loadCss(url){
+      var head = document.getElementsByTagName('head')[0];
+      var link = document.createElement('link');
+      link.rel = 'stylesheet';
+    link.href = url;    
+      head.appendChild(link);
+  }
+
+
+loadScript("file:///android_asset/js/androidFileUploadFix-1.1.0.js", function() {
+
+  try {
+      fixAndroidFileUpload()
+  } catch(e)
+  {
+    alert(e);
+  }
+
+
+});
+
+
+
+
+
+</script>
+</head>
+<body>
+<div data-role="page" id="pageone">
+  <div data-role="header">
+  <h1>PRODUCT DETAIL</h1>
+  </div>
+
+<div data-role="content">
+<form method="post"  enctype="multipart/form-data"  action="http://www.hashemian.com/tools/form-post-tester.php">
+
+  <div data-role="fieldcontain">
+    <label for="name">Open File Chosser And Select File From Camera :</label>
+    <input type="file" name="text" id="name" type="image/*"  onclick="fixAndroidFileUpload()" onchange="updateImg(this, 'img1')" >
+    <!--- onClick="prepareForPicker();" -->
+    <img id="img1" alt="uploaded image" src="" width="100px" height="100px" />
+  </div>
+
+  <div data-role="fieldcontain">
+    <label for="name">Email:</label>
+    <input type="text" name="text" id="name" value="" placeholder="What's Your Name?">
+  </div>
+    
+  <div data-role="fieldcontain">
+    <label for="search">Looking for anything?</label>
+    <input type="search" name="search" id="search" value="" placeholder="Search for content"/>
+  </div>
+ 
+  <div data-role="fieldcontain">
+    <label for="colors"><a href="http://www.androidexample.com/media/webview/webview_browser.html">Open link in webview browser.</a></label>
+    <br>
+    <br>
+    <label for="colors"><a href="http://www.google.com/">Open link in new browser.</a></label>
+   </div>
+
+
+<input type="submit" value="Submit Button" />
+
+<fieldset class="ui-grid-b">
+
+    <div class="ui-block-a">
+      <input type="button" value="Toast" onClick="showAndroidToast('Hello Android!')" />
+    </div>
+
+    <div class="ui-block-b">
+      <input type="button" value="Android" onClick="showAndroid()" />
+    </div>
+
+    <div class="ui-block-c">
+      <input type="button" value="moveToScreenTwo" onClick="moveToScreenTwo()" />
+    </div>
+
+</fieldset>
+
+
+</form>  
+  
+</div>
+</div>
+
+<script type="text/javascript">
+function getAndroidVersion() {
+    var ua = navigator.userAgent; 
+    var match = ua.match(/Android\s([0-9\.]*)/);
+    return match ? match[1] : false;
+};
+function prepareForPicker(){
+    if(getAndroidVersion().indexOf("4.4") != -1){
+        console.log("showPicker");
+        window.jsi.showPicker();
+        return false;
+    }
+}
+
+function updateImg(input, previewImgId) {
+
+  try {
+      if (input.files && input.files[0]) {
+        var file = input.files[0];
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          var img = document.getElementById(previewImgId);
+          //alert(e.target.result);
+          var dataurl = e.target.result;
+          dataurl = "data:image/" + file.name.split('.').slice(-1)[0] + ";base64," + dataurl.split(',')[1];
+          //alert(dataurl);
+          img.src = dataurl;
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+  } catch (e) {
+      alert(e);
+  }
+
+}
+
+function showAndroid() {
+      console.log("showAndroid");
+      window.jsi.showAndroid();
+}
+
+function showAndroidToast(toast) {
+      console.log("showToast");
+      window.jsi.showToast(toast);
+}
+
+function moveToScreenTwo() {
+        console.log("moveToScreenTwo");
+        window.jsi.moveToNextScreen();
+    }
+
+function CheckImage(name)
+{
+//Check to see if user wants to save I used some ajax to save the file if necesarry
+}
+</script>
+
+
+</body>
+</html>
